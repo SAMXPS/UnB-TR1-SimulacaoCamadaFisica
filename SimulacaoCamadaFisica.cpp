@@ -14,22 +14,26 @@ void AplicacaoTransmissora (void) {
 }// fim do metodo AplicacaoTransmissora
 
 void CamadaDeAplicacaoTransmissora(string mensagem) {
-    vector<int> quadro = mensagem; // trabalhar com bits
+    vector<int> quadro; // trabalhar com bits
+
+    for(int i = 0; i < mensagem.size(); i++){
+        quadro.push_back(mensagem[i]);
+    } //fim do for
 
     //chama a proxima camada
     CamadaFisicaTransmissora(quadro);
 }// fim do metodo de CamadaDeAplicacaoTransmissora
 
-void CamadaFisicaTransmissora(int quadro []) {
+void CamadaFisicaTransmissora(vector<int> quadro) {
     int tipoDeCodificacao = 0; // alterar de acordo com o teste
-    int fluxoBrutoDeBits []; // Bits e não bytes!
+    vector<int> fluxoBrutoDeBits; // Bits e não bytes!
 
     switch (tipoDeCodificacao) {
         case 0: // codificacao binaria
             fluxoBrutoDeBits = CamadaFisicaTransmissoraCodificacaoBinaria(quadro);
             break;
         case 1: // codificacao manchester
-            fluxoBrutoDeBits = CamadaFisicaTransmissoraManchester(quadro);
+            fluxoBrutoDeBits = CamadaFisicaTransmissoraCodificacaoManchester(quadro);
             break;
         case 2: // codificacao bipolar
             fluxoBrutoDeBits = CamadaFisicaTransmissoraCodificacaoBipolar(quadro);
@@ -47,7 +51,7 @@ int [] CamadaFisicaTransmissoraCodificacaoBinaria (int quadro []) {
 
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoBinaria
 
-int [] CamadaFisicaTransmissoraManchester (int quadro []) {
+int [] CamadaFisicaTransmissoraCodificacaoManchester (int quadro []) {
 
     //implementacao do algoritmo
 
@@ -75,6 +79,45 @@ void MeioDeComunicacao (int fluxoBrutoDeBits []){
     //chama a proxima camada
     CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }//fim do metodo MeioDeTransmissão
+
+void CamadaFisicaReceptora (int quadro []){
+    int tipoDeCodificacao = 0; // alterar de acordo com o teste
+    vector<int> fluxoBrutoDeBits; // Bits e não bytes!
+
+    switch (tipoDeCodificacao) {
+        case 0: // codificacao binaria
+            fluxoBrutoDeBits = CamadaFisicaTransmissoraDecodificacaoBinaria(quadro);
+            break;
+        case 1: // codificacao manchester
+            fluxoBrutoDeBits = CamadaFisicaTransmissoraDecodificacaoManchester(quadro);
+            break;
+        case 2: // codificacao bipolar
+            fluxoBrutoDeBits = CamadaFisicaTransmissoraDecodificacaoBipolar(quadro);
+            break;
+        default:
+            break;
+    }//fim do switch case
+
+    CamadaDeAplicacaoReceptora(fluxoBrutoDeBits);
+}
+
+int [] CamadaFisicaTransmissoraDecodificacaoBinaria (int quadro []) {
+
+    //implementacao do algoritmo
+
+}//fim do metodo CamadaFisicaTransmissoraDecodificacaoBinaria
+
+int [] CamadaFisicaTransmissoraDecodificacaoManchester (int quadro []) {
+
+    //implementacao do algoritmo
+
+}//fim do metodo CamadaFisicaTransmissoraDecodificacaoManchester
+
+int [] CamadaFisicaTransmissoraDecodificacaoBipolar (int quadro []) {
+
+    //implementacao do algoritmo
+
+}//fim do metodo CamadaFisicaTransmissoraDecodificacaoBipolar
 
 void CamadaDeAplicacaoReceptora (int quadro []) {
     string mensagem = quadro [];
