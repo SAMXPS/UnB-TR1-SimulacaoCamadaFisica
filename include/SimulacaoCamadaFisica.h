@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include "stdio.h"
 
 using std::cout;
 using std::cin;
@@ -23,5 +24,7 @@ vector<int> CamadaFisicaTransmissoraDecodificacaoManchester (vector<int> quadro)
 vector<int> CamadaFisicaTransmissoraDecodificacaoBipolar (vector<int> quadro);
 void CamadaDeAplicacaoReceptora (vector<int> quadro);
 void AplicacaoReceptora (string mensagem);
+
+void mostraMensagemEmBits (vector<int> quadro);
 
 #endif  // INCLUDE_SIMULACAO_CAMADA_FISICA_H_

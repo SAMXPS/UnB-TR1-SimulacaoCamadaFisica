@@ -16,9 +16,16 @@ void AplicacaoTransmissora (void) {
 void CamadaDeAplicacaoTransmissora(string mensagem) {
     vector<int> quadro; // trabalhar com bits
 
-    for(int i = 0; i < mensagem.size(); i++){ // TO DO - FAZER O QUADRO SER EM BITS (ESTA EM BYTES)
-        quadro.push_back(mensagem[i]);
+    // converte a mensagem de um vetor de chars para
+    // um vetor de bits
+    for(int i = 0; i < mensagem.size(); i++){
+        for(int j = 7; j >= 0; j--){
+            int bitAtual = ((mensagem[i] >> j) & 1);
+            quadro.push_back(bitAtual);
+        }
     } //fim do for
+
+    //mostraMensagemEmBits(quadro);
 
     //chama a proxima camada
     CamadaFisicaTransmissora(quadro);
@@ -128,8 +135,16 @@ vector<int> CamadaFisicaTransmissoraDecodificacaoBipolar (vector<int> quadro) {
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoBipolar
 
 void CamadaDeAplicacaoReceptora (vector<int> quadro) {
-    // TO DO - CONVERTER O QUADRO DE BITS PARA STRING
-    string mensagem(quadro.begin(), quadro.end());//converte de vector para string
+    
+    string mensagem = "";
+
+    for(int i = 0; i < quadro.size()/8; i++){
+        char charAtual = 0; // 1111 1111
+        for(int j = 0; j < 8; j++){
+            charAtual |= (quadro[i*8 + j] << (7-j));
+        }
+        mensagem.push_back(charAtual);
+    } //fim do for
 
     //chama a proxima camada
     AplicacaoReceptora(mensagem);
@@ -138,3 +153,13 @@ void CamadaDeAplicacaoReceptora (vector<int> quadro) {
 void AplicacaoReceptora (string mensagem) {
     cout << "A mensagem recebida foi: " << mensagem << endl;
 }// fim do metodo AplicacaoReceptora
+
+void mostraMensagemEmBits (vector<int> quadro) {
+    //mostra a mensagem convertida em bits
+    for(int i = 0; i < quadro.size()/8; i++){
+        for(int j = 0; j < 8; j++){
+            cout << quadro[i*8 + j] << " ";
+        }
+        cout << endl;
+    } //fim do for
+}// fim metodo mostraMensagemEmBits
