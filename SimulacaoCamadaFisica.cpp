@@ -16,7 +16,7 @@ void AplicacaoTransmissora (void) {
 void CamadaDeAplicacaoTransmissora(string mensagem) {
     vector<int> quadro; // trabalhar com bits
 
-    for(int i = 0; i < mensagem.size(); i++){
+    for(int i = 0; i < mensagem.size(); i++){ // TO DO - FAZER O QUADRO SER EM BITS (ESTA EM BYTES)
         quadro.push_back(mensagem[i]);
     } //fim do for
 
@@ -45,19 +45,19 @@ void CamadaFisicaTransmissora(vector<int> quadro) {
     MeioDeComunicacao(fluxoBrutoDeBits);
 }// fim do metodo de CamadaFisicaTransmissora
 
-int [] CamadaFisicaTransmissoraCodificacaoBinaria (int quadro []) {
+vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (vector<int> quadro) {
 
     //implementacao do algoritmo
 
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoBinaria
 
-int [] CamadaFisicaTransmissoraCodificacaoManchester (int quadro []) {
+vector<int> CamadaFisicaTransmissoraCodificacaoManchester (vector<int> quadro) {
 
     //implementacao do algoritmo
 
 }//fim do metodo CamadaFisicaTransmissoraManchester
 
-int [] CamadaFisicaTransmissoraCodificacaoBipolar (int quadro []) {
+vector<int> CamadaFisicaTransmissoraCodificacaoBipolar (vector<int> quadro) {
 
     //implementacao do algoritmo
 
@@ -67,20 +67,22 @@ int [] CamadaFisicaTransmissoraCodificacaoBipolar (int quadro []) {
  * comunicacao, passando de um ponto A (transmissor) para um
  * ponto B (receptor)
  * **/
-void MeioDeComunicacao (int fluxoBrutoDeBits []){
-    int fluxoBrutoDeBitsPontoA[], fluxoBrutoDeBitsPontoB[];
+void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
+    vector<int> fluxoBrutoDeBitsPontoA, fluxoBrutoDeBitsPontoB;
 
     fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 
-    while (fluxoBrutoDeBitsPontoB.lenght != fluxoBrutoDeBitsPontoA) {
-        fluxoBrutoDeBitsPontoB += fluxoBrutoDeBitsPontoA;
+    int i = 0;
+    while (fluxoBrutoDeBitsPontoB.size() != fluxoBrutoDeBitsPontoA.size()) {
+        fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i]); // bits sendo transferidos
+        i++;
     }//fim do while
 
     //chama a proxima camada
     CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }//fim do metodo MeioDeTransmissão
 
-void CamadaFisicaReceptora (int quadro []){
+void CamadaFisicaReceptora (vector<int> quadro) {
     int tipoDeCodificacao = 0; // alterar de acordo com o teste
     vector<int> fluxoBrutoDeBits; // Bits e não bytes!
 
@@ -101,26 +103,27 @@ void CamadaFisicaReceptora (int quadro []){
     CamadaDeAplicacaoReceptora(fluxoBrutoDeBits);
 }
 
-int [] CamadaFisicaTransmissoraDecodificacaoBinaria (int quadro []) {
+vector<int> CamadaFisicaTransmissoraDecodificacaoBinaria (vector<int> quadro) {
 
     //implementacao do algoritmo
 
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoBinaria
 
-int [] CamadaFisicaTransmissoraDecodificacaoManchester (int quadro []) {
+vector<int> CamadaFisicaTransmissoraDecodificacaoManchester (vector<int> quadro) {
 
     //implementacao do algoritmo
 
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoManchester
 
-int [] CamadaFisicaTransmissoraDecodificacaoBipolar (int quadro []) {
+vector<int> CamadaFisicaTransmissoraDecodificacaoBipolar (vector<int> quadro) {
 
     //implementacao do algoritmo
 
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoBipolar
 
-void CamadaDeAplicacaoReceptora (int quadro []) {
-    string mensagem = quadro [];
+void CamadaDeAplicacaoReceptora (vector<int> quadro) {
+    // TO DO - CONVERTER O QUADRO DE BITS PARA STRING
+    string mensagem(quadro.begin(), quadro.end());//converte de vector para string
 
     //chama a proxima camada
     AplicacaoReceptora(mensagem);
