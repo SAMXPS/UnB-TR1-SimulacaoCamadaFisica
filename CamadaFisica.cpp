@@ -1,8 +1,4 @@
-#include "../include/SimulacaoCamadaFisica.h"
-
-int main(void){
-    AplicacaoTransmissora();
-}// fim do metodo main
+#include "CamadaFisica.h"
 
 void AplicacaoTransmissora (void) {
     string mensagem;
