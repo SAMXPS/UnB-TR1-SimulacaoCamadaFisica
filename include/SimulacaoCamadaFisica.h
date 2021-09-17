@@ -10,6 +10,7 @@ using std::cin;
 using std::endl;
 using std::string;
 using std::vector;
+using std::getline;
 
 void AplicacaoTransmissora (void);
 void CamadaDeAplicacaoTransmissora(string mensagem);
