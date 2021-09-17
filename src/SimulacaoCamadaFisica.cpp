@@ -48,18 +48,21 @@ void CamadaFisicaTransmissora(vector<int> quadro) {
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (vector<int> quadro) {
 
     //implementacao do algoritmo
+    return quadro;
 
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoBinaria
 
 vector<int> CamadaFisicaTransmissoraCodificacaoManchester (vector<int> quadro) {
 
     //implementacao do algoritmo
+    return quadro;
 
 }//fim do metodo CamadaFisicaTransmissoraManchester
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBipolar (vector<int> quadro) {
 
     //implementacao do algoritmo
+    return quadro;
 
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoBipolar
 
@@ -106,18 +109,21 @@ void CamadaFisicaReceptora (vector<int> quadro) {
 vector<int> CamadaFisicaTransmissoraDecodificacaoBinaria (vector<int> quadro) {
 
     //implementacao do algoritmo
+    return quadro;
 
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoBinaria
 
 vector<int> CamadaFisicaTransmissoraDecodificacaoManchester (vector<int> quadro) {
 
     //implementacao do algoritmo
+    return quadro;
 
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoManchester
 
 vector<int> CamadaFisicaTransmissoraDecodificacaoBipolar (vector<int> quadro) {
 
     //implementacao do algoritmo
+    return quadro;
 
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoBipolar
 
