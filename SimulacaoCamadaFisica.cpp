@@ -1,3 +1,5 @@
+#include "SimulacaoCamadaFisica.hpp"
+
 int main(void){
     AplicacaoTransmissora();
 }// fim do metodo main
@@ -12,7 +14,7 @@ void AplicacaoTransmissora (void) {
 }// fim do metodo AplicacaoTransmissora
 
 void CamadaDeAplicacaoTransmissora(string mensagem) {
-    int quadro [] = mensagem; // trabalhar com bits
+    vector<int> quadro = mensagem; // trabalhar com bits
 
     //chama a proxima camada
     CamadaFisicaTransmissora(quadro);
