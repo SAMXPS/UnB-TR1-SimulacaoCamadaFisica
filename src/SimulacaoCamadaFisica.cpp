@@ -1,4 +1,4 @@
-#include "SimulacaoCamadaFisica.hpp"
+#include "../include/SimulacaoCamadaFisica.h"
 
 int main(void){
     AplicacaoTransmissora();
