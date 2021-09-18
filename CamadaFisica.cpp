@@ -4,7 +4,7 @@
 #define CODIFICACAO_MANCHESTER 1
 #define CODIFICACAO_BIPOLAR 2
 
-int tipoDeCodificacao = CODIFICACAO_MANCHESTER; // alterar de acordo com o teste
+int tipoDeCodificacao = CODIFICACAO_BINARIA; // alterar de acordo com o teste
 
 void AplicacaoTransmissora (void) {
     string mensagem;
@@ -55,8 +55,24 @@ void CamadaFisicaTransmissora(vector<int> quadro) {
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (vector<int> quadro) {
 
-    //implementacao do algoritmo
-    return quadro;
+    // codificacao binaria escolhida foi a Bipolar NTZ(L)
+    // (Non return to zero - level)
+    // algoritmo seguindo o padrao  RS-232
+
+    vector<int> fluxoBrutoDeBits;
+
+    for(int i = 0; i < quadro.size(); i++){
+        if (quadro[i] == 1) {
+            // 1 eh representado por uma voltagem positiva - nonosso caso 5 v
+            fluxoBrutoDeBits.push_back(5);
+        }
+        if (quadro[i] == 0) {
+            // 0 eh representado por uma voltagem negativa - nonosso caso -5 v
+            fluxoBrutoDeBits.push_back(-5);
+        }
+    }
+
+    return fluxoBrutoDeBits;
 
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoBinaria
 
@@ -123,8 +139,20 @@ void CamadaFisicaReceptora (vector<int> quadro) {
 
 vector<int> CamadaFisicaTransmissoraDecodificacaoBinaria (vector<int> quadro) {
 
-    //implementacao do algoritmo
-    return quadro;
+    vector<int> fluxoBrutoDeBits;
+
+    for(int i = 0; i < quadro.size(); i++){
+        if (quadro[i] >= 5 && quadro[i] <= 12) {
+            // se o sinal esta entre 12 e 5 V o resultado 1 -- RS-232
+            fluxoBrutoDeBits.push_back(1);
+        }
+        if (quadro[i] <= -5 && quadro[i] >= -12) {
+            // se o sinal esta entre -12 e -5 V o resultado 0 -- RS-232
+            fluxoBrutoDeBits.push_back(0);
+        }
+    }
+
+    return fluxoBrutoDeBits;
 
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoBinaria
 
