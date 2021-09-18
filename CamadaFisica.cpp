@@ -4,7 +4,7 @@
 #define CODIFICACAO_MANCHESTER 1
 #define CODIFICACAO_BIPOLAR 2
 
-int tipoDeCodificacao = CODIFICACAO_BINARIA; // alterar de acordo com o teste
+int tipoDeCodificacao = CODIFICACAO_BIPOLAR; // alterar de acordo com o teste
 
 void AplicacaoTransmissora (void) {
     string mensagem;
@@ -93,8 +93,27 @@ vector<int> CamadaFisicaTransmissoraCodificacaoManchester (vector<int> quadro) {
 
 vector<int> CamadaFisicaTransmissoraCodificacaoBipolar (vector<int> quadro) {
 
-    //implementacao do algoritmo
-    return quadro;
+    // utilizando a codificacao alternate mark inversion
+    // 1 eh representado como 1 ou -1 - alternando
+
+    int valorUltimo1 = -1;
+
+    vector<int> fluxoBrutoDeBits;
+
+    for(int i = 0; i < quadro.size(); i++){
+        if(quadro[i] == 0){
+            // 0 eh representado como 0
+            fluxoBrutoDeBits.push_back(0);
+        }
+        
+        if (quadro[i] == 1) {
+            // 1 eh representado como 1 ou -1 - alternando
+            valorUltimo1 = (valorUltimo1 < 0) ? 1 : -1;
+            fluxoBrutoDeBits.push_back(valorUltimo1);
+        }
+    }
+
+    return fluxoBrutoDeBits;
 
 }//fim do metodo CamadaFisicaTransmissoraCodificacaoBipolar
 
@@ -179,8 +198,23 @@ vector<int> CamadaFisicaTransmissoraDecodificacaoManchester (vector<int> quadro)
 
 vector<int> CamadaFisicaTransmissoraDecodificacaoBipolar (vector<int> quadro) {
 
-    //implementacao do algoritmo
-    return quadro;
+    // decodificacao do alternated mark inversion
+
+    vector<int> fluxoBrutoDeBits;
+
+    for(int i = 0; i < quadro.size(); i++){
+        if(quadro[i] == 0){
+            // 0 eh representado como 0
+            fluxoBrutoDeBits.push_back(0);
+        }
+        
+        if (quadro[i] == 1 || quadro[i] == -1) {
+            // 1 eh representado como 1 ou -1
+            fluxoBrutoDeBits.push_back(1);
+        }
+    }
+
+    return fluxoBrutoDeBits;
 
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoBipolar
 
