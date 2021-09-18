@@ -1,5 +1,11 @@
 #include "CamadaFisica.h"
 
+#define CODIFICACAO_BINARIA 0
+#define CODIFICACAO_MANCHESTER 1
+#define CODIFICACAO_BIPOLAR 2
+
+int tipoDeCodificacao = CODIFICACAO_MANCHESTER; // alterar de acordo com o teste
+
 void AplicacaoTransmissora (void) {
     string mensagem;
     cout << "Digite uma mensagem" << endl;
@@ -28,17 +34,16 @@ void CamadaDeAplicacaoTransmissora(string mensagem) {
 }// fim do metodo de CamadaDeAplicacaoTransmissora
 
 void CamadaFisicaTransmissora(vector<int> quadro) {
-    int tipoDeCodificacao = 0; // alterar de acordo com o teste
     vector<int> fluxoBrutoDeBits; // Bits e não bytes!
 
     switch (tipoDeCodificacao) {
-        case 0: // codificacao binaria
+        case CODIFICACAO_BINARIA: // codificacao binaria
             fluxoBrutoDeBits = CamadaFisicaTransmissoraCodificacaoBinaria(quadro);
             break;
-        case 1: // codificacao manchester
+        case CODIFICACAO_MANCHESTER: // codificacao manchester
             fluxoBrutoDeBits = CamadaFisicaTransmissoraCodificacaoManchester(quadro);
             break;
-        case 2: // codificacao bipolar
+        case CODIFICACAO_BIPOLAR: // codificacao bipolar
             fluxoBrutoDeBits = CamadaFisicaTransmissoraCodificacaoBipolar(quadro);
             break;
         default:
@@ -89,17 +94,16 @@ void MeioDeComunicacao (vector<int> fluxoBrutoDeBits) {
 }//fim do metodo MeioDeTransmissão
 
 void CamadaFisicaReceptora (vector<int> quadro) {
-    int tipoDeCodificacao = 0; // alterar de acordo com o teste
     vector<int> fluxoBrutoDeBits; // Bits e não bytes!
 
     switch (tipoDeCodificacao) {
-        case 0: // codificacao binaria
+        case CODIFICACAO_BINARIA: // codificacao binaria
             fluxoBrutoDeBits = CamadaFisicaTransmissoraDecodificacaoBinaria(quadro);
             break;
-        case 1: // codificacao manchester
+        case CODIFICACAO_MANCHESTER: // codificacao manchester
             fluxoBrutoDeBits = CamadaFisicaTransmissoraDecodificacaoManchester(quadro);
             break;
-        case 2: // codificacao bipolar
+        case CODIFICACAO_BIPOLAR: // codificacao bipolar
             fluxoBrutoDeBits = CamadaFisicaTransmissoraDecodificacaoBipolar(quadro);
             break;
         default:
