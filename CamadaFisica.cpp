@@ -62,8 +62,16 @@ vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (vector<int> quadro) {
 
 vector<int> CamadaFisicaTransmissoraCodificacaoManchester (vector<int> quadro) {
 
-    //implementacao do algoritmo
-    return quadro;
+    vector<int> fluxoBrutoDeBits;
+
+    for(int i = 0; i < quadro.size(); i++){
+        // implementa um "xor" com o clock - 010101...
+        // seguindo a convencao IEEE 802.3
+        fluxoBrutoDeBits.push_back((quadro[i] ^ 0));
+        fluxoBrutoDeBits.push_back((quadro[i] ^ 1));
+    }
+
+    return fluxoBrutoDeBits;
 
 }//fim do metodo CamadaFisicaTransmissoraManchester
 
@@ -122,8 +130,22 @@ vector<int> CamadaFisicaTransmissoraDecodificacaoBinaria (vector<int> quadro) {
 
 vector<int> CamadaFisicaTransmissoraDecodificacaoManchester (vector<int> quadro) {
 
-    //implementacao do algoritmo
-    return quadro;
+    vector<int> fluxoBrutoDeBits;
+
+    for(int i = 0; i < quadro.size(); i+=2){
+        // decodifica o quadro:
+        if(quadro[i] == 0 && quadro[i+1] == 1){
+            // "0 1" eh traduzido como 0
+            fluxoBrutoDeBits.push_back(0);
+        } else if (quadro[i] == 1 && quadro[i+1] == 0) {
+            // "1 0" eh traduzido como 1
+            fluxoBrutoDeBits.push_back(1);
+        } else {
+            // algum erro na transmissão ocorreu
+        }
+    }
+
+    return fluxoBrutoDeBits;
 
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoManchester
 
@@ -135,6 +157,8 @@ vector<int> CamadaFisicaTransmissoraDecodificacaoBipolar (vector<int> quadro) {
 }//fim do metodo CamadaFisicaTransmissoraDecodificacaoBipolar
 
 void CamadaDeAplicacaoReceptora (vector<int> quadro) {
+
+    //mostraMensagemEmBits(quadro);
     
     string mensagem = "";
 
@@ -162,4 +186,5 @@ void mostraMensagemEmBits (vector<int> quadro) {
         }
         cout << endl;
     } //fim do for
+    cout << endl;
 }// fim metodo mostraMensagemEmBits
