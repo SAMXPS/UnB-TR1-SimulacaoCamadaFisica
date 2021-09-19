@@ -112,6 +112,29 @@ void draw_title(int y, std::string title) {
     }
 }
 
+void draw_binary(int x_slide, int y_start, int height, int len, int* voltages) {
+    
+    // Mostrando eixo vertical com valores de tensão.
+    mvprintw(y_start, 0, "1");
+    mvprintw(y_start+height, 0, "0");
+
+    int max_y = 0, max_x = 0;
+    getmaxyx(stdscr, max_y, max_x); // Calculando tamanho da tela.
+
+    int x_start = 10;               // Espaçamento horizontal.
+    max_x -= x_start;               // Variável auxiliar.
+
+    for (int x = x_slide+1; x < max_x+x_slide && x < len; x++) {
+        draw_line( 
+            x_start+x-1-x_slide,                // x0.
+            y_start+(!voltages[x-1])*height,    // y0.
+            x_start+x-x_slide,                  // x1.
+            y_start+(!voltages[x])*height,      // y1.
+            '*'                                 // Desenhar asteríscos no gráfico.
+        );
+    }
+}
+
 void draw_signal(int x_slide, int y_start, int height, int len, double* voltages, double max_voltage, double min_voltage) {
     
     // Mostrando eixo vertical com valores de tensão.
@@ -143,49 +166,35 @@ void draw_signal(int x_slide, int y_start, int height, int len, double* voltages
     }
 }
 
-
 void draw() {
-    /*clear(); // Clear the screen of all
-    
-    int bits[] = {0,1,0,1,1,0,0};
-    int bit_amount = 7;
-
-    const int bit_width = 10;
-    const int bit_height = 10;
-
-
-    for (int i = 0; i < bit_amount; i++) {
-        int lastbit = i == 0 ? bits[0] : bits[i-1];
-        int bit = bits[i];
-
-        if (lastbit != bit) {
-            for (int y = 1; y < bit_height; y++) {
-                mvprintw(y, bit_width*i, "|");
-            }
-        }
-        mvprintw(bit_height+2, bit_width*i, "|");
-
-        mvprintw(bit_height+2, bit_width*i+bit_width/2, bit ? "1" : "0");
-
-        for (int x = 1; x < bit_width; x++) {
-            mvprintw(!bit*bit_height, bit_width*i + x, "-");
-        }
-    }
-    
-    refresh();*/
-
     static int x = 0;
     clear(); // Clear the screen of all
     double voltages[300];
+    int    bits[300];
     for (int i = 0; i < 300; i++) {
-        voltages[i] = ((i/10)%3)*5-5;
+        bits[i] = ((i/10)%3);
+        voltages[i] = bits[i]*5-5;
     }
-    draw_title(8, "Sinal de Teste");
-    draw_signal(x++, 10, 11, 300, voltages, 5, -5);
-    draw_title(22, "");
+
+    const int binary_height = 4;
+    const int voltage_height = 11;
+
+    int y = 0;
+    mvprintw(++y, 0, "Tipo de Codificação: binária");
+    mvprintw(++y, 0, "Mensagem transmitida: MENSAGEM TESTE");
+
+    draw_title(y+=2, "Transmição de bits");
+    draw_binary(x, y+=2, binary_height, 300, bits);
+    draw_title(y+=binary_height+2, "Camada física");
+    draw_signal(x, y+=2, voltage_height, 300, voltages, 5, -5);
+
+    draw_title(y+=voltage_height+2, "Recepção de bits");
+    draw_binary(x++, y+=2, binary_height, 300, bits);
+
+    mvprintw(45, 0, "Mensagem Recebida: MENSAGEM TESTE");
 
     refresh();
     //getchar();
     if (x>100) x=0;
-    usleep(50000);
+    usleep(70000);
 }
