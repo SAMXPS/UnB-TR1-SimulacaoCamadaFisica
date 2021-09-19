@@ -3,7 +3,7 @@ CC=g++
 ODIR=obj
 LDIR=lib
 
-LIBS=-lm
+LIBS=-lm -lncurses
 
 DEPS = CamadaFisica.h
 
