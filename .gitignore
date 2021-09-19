@@ -1,0 +1,4 @@
+simulacao
+.vscode/*
+*.o
+obj/*
