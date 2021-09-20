@@ -5,6 +5,10 @@
 #include <vector>
 #include "stdio.h"
 
+#define CODIFICACAO_BINARIA 0
+#define CODIFICACAO_MANCHESTER 1
+#define CODIFICACAO_BIPOLAR 2
+
 using std::cout;
 using std::cin;
 using std::endl;
@@ -12,7 +16,17 @@ using std::string;
 using std::vector;
 using std::getline;
 
-void AplicacaoTransmissora (void);
+// Variáveis para integração com interface de usuário
+typedef struct  {
+    std::string mensagem_transmitida;
+    vector<int> quadro_transmitido;
+    vector<int> tensoes;
+    vector<int> quadro_recebido;
+    std::string mensagem_recebida;
+    int tipo_de_codificacao;
+} contexto_simulacao;
+
+void AplicacaoTransmissora (contexto_simulacao* contexto);
 void CamadaDeAplicacaoTransmissora(string mensagem);
 void CamadaFisicaTransmissora(vector<int> quadro);
 vector<int> CamadaFisicaTransmissoraCodificacaoBinaria (vector<int> quadro);
