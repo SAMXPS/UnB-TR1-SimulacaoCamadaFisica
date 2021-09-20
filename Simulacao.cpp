@@ -43,6 +43,7 @@ const char *simulacao_help[] = {
     "Pressione F1 para sair do programa."
 };
 
+// Loop principal da simulação.
 int loop(contexto_simulacao* contexto, int x) {
     clear();                                                    // Limpando a tela.
     const int binary_height = 4;                                // Altura do sinal de bits.
@@ -102,6 +103,7 @@ int loop(contexto_simulacao* contexto, int x) {
     return x;
 }
 
+// Menu inicial
 int menu_selecionar_codifcacao() {
     WINDOW *my_menu_win;                                        // Janela nCurses.
 	MENU *my_menu;                                              // Menu nCurses.
@@ -188,6 +190,7 @@ int menu_selecionar_codifcacao() {
     return index;                                               // Retorna o índice da opção selecionada.
 }
 
+// Tela em que o usuário digita a mensagem a ser transmitida.
 std::string menu_digitar_mensagem() {
     int y = 0;
     char* str = (char*) calloc(80, sizeof(char));                   // Alocando memória.
