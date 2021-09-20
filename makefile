@@ -7,7 +7,7 @@ LIBS=-lm -lncurses
 
 DEPS = CamadaFisica.h
 
-_OBJ = Simulacao.o CamadaFisica.o
+_OBJ = Simulacao.o CamadaFisica.o DrawUtils.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
