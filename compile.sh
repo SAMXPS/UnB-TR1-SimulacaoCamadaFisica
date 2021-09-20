@@ -1,1 +1,2 @@
+mkdir obj
 make simulacao
