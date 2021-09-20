@@ -1,18 +1,16 @@
 #include "CamadaFisica.h"
 
-#define CODIFICACAO_BINARIA 0
-#define CODIFICACAO_MANCHESTER 1
-#define CODIFICACAO_BIPOLAR 2
-
 int tipoDeCodificacao = CODIFICACAO_BIPOLAR; // alterar de acordo com o teste
+contexto_simulacao* contexto;
 
-void AplicacaoTransmissora (void) {
-    string mensagem;
-    cout << "Digite uma mensagem" << endl;
-    getline(cin, mensagem);
-
-    //chama a proxima camada
-    CamadaDeAplicacaoTransmissora(mensagem); //exmplo realistico: SEND do SOCKET
+/**
+ * Aplicação transmissora recebe um contexto de simulação e inicia a pilha de
+ * protocolos de transmissão e recepção, salvando os resultados no contexto.
+ */
+void AplicacaoTransmissora (contexto_simulacao* novo_contexto) {
+    contexto = novo_contexto; 
+    tipoDeCodificacao = contexto->tipo_de_codificacao;
+    CamadaDeAplicacaoTransmissora(contexto->mensagem_transmitida);
 }// fim do metodo AplicacaoTransmissora
 
 void CamadaDeAplicacaoTransmissora(string mensagem) {
@@ -30,6 +28,7 @@ void CamadaDeAplicacaoTransmissora(string mensagem) {
     //mostraMensagemEmBits(quadro);
 
     //chama a proxima camada
+    contexto->quadro_transmitido = quadro; // Integração com a simulação
     CamadaFisicaTransmissora(quadro);
 }// fim do metodo de CamadaDeAplicacaoTransmissora
 
@@ -50,6 +49,7 @@ void CamadaFisicaTransmissora(vector<int> quadro) {
             break;
     }//fim do switch case
 
+    contexto->tensoes = fluxoBrutoDeBits; // Integração com a simulação
     MeioDeComunicacao(fluxoBrutoDeBits);
 }// fim do metodo de CamadaFisicaTransmissora
 
@@ -153,6 +153,7 @@ void CamadaFisicaReceptora (vector<int> quadro) {
             break;
     }//fim do switch case
 
+    contexto->quadro_recebido = fluxoBrutoDeBits; // Integração com a simulação
     CamadaDeAplicacaoReceptora(fluxoBrutoDeBits);
 }
 
@@ -233,6 +234,7 @@ void CamadaDeAplicacaoReceptora (vector<int> quadro) {
     } //fim do for
 
     //chama a proxima camada
+    contexto->mensagem_recebida = mensagem; // Integração com a simulação
     AplicacaoReceptora(mensagem);
 }// fim do metodo CamadaDeAplicacaoReceptora
 

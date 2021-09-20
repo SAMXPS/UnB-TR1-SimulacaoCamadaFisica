@@ -6,9 +6,8 @@
 #include <limits>
 #include <math.h>
 #include "CamadaFisica.h"
-//AplicacaoTransmissora();
 
-void draw();
+void draw(contexto_simulacao* contexto);
 
 int main(int argc, char *argv[]) {
 
@@ -16,8 +15,13 @@ int main(int argc, char *argv[]) {
     noecho();                   // Desabilitando echo de caracteres.
     curs_set(FALSE);            // Desabilitando cursor.
 
+    contexto_simulacao contexto;
+    // TODO: interação com usuário
+    contexto.mensagem_transmitida = "Teste";
+    contexto.tipo_de_codificacao = CODIFICACAO_BIPOLAR;
+    AplicacaoTransmissora(&contexto);
     while(1) {
-        draw();                 // Desenha interface gráfica.
+        draw(&contexto);        // Desenha interface gráfica.
     }
 
     endwin();                   // Finaliza o programa.
@@ -166,35 +170,52 @@ void draw_signal(int x_slide, int y_start, int height, int len, double* voltages
     }
 }
 
-void draw() {
+void draw(contexto_simulacao* contexto) {
     static int x = 0;
     clear(); // Clear the screen of all
-    double voltages[300];
-    int    bits[300];
-    for (int i = 0; i < 300; i++) {
-        bits[i] = ((i/10)%3);
-        voltages[i] = bits[i]*5-5;
-    }
 
     const int binary_height = 4;
     const int voltage_height = 11;
+    int bit_len = contexto->quadro_transmitido.size();
+    int voltage_len = contexto->tensoes.size();
+    double voltage_to_bit_ratio = (voltage_len*1.0D)/bit_len;
+    int bit_width = voltage_to_bit_ratio*5;
+
+    int len = bit_len * bit_width;
+
+    int bits_transmitidos[len];
+    double voltages[len];
+    int bits_recebidos[len];
+
+    double min_voltage = 0;
+    double max_voltage = 0;
+
+    for (int i = 0; i < len; i++) {
+        bits_transmitidos[i] = contexto->quadro_transmitido[i/bit_width];
+        voltages[i] = contexto->tensoes[(i*voltage_to_bit_ratio)/bit_width];
+        bits_recebidos[i] = contexto->quadro_recebido[i/bit_width];
+        if (voltages[i] > max_voltage) max_voltage = voltages[i];
+        if (voltages[i] < min_voltage) min_voltage = voltages[i];
+    }
 
     int y = 0;
     mvprintw(++y, 0, "Tipo de Codificação: binária");
-    mvprintw(++y, 0, "Mensagem transmitida: MENSAGEM TESTE");
+    mvprintw(++y, 0, "Mensagem transmitida: ");
+    mvprintw(y, 22, contexto->mensagem_transmitida.c_str());
 
     draw_title(y+=2, "Transmição de bits");
-    draw_binary(x, y+=2, binary_height, 300, bits);
+    draw_binary(x, y+=2, binary_height, len, bits_transmitidos);
     draw_title(y+=binary_height+2, "Camada física");
-    draw_signal(x, y+=2, voltage_height, 300, voltages, 5, -5);
+    draw_signal(x, y+=2, voltage_height, len, voltages, max_voltage, min_voltage);
 
     draw_title(y+=voltage_height+2, "Recepção de bits");
-    draw_binary(x++, y+=2, binary_height, 300, bits);
+    draw_binary(x++, y+=2, binary_height, len, bits_recebidos);
 
-    mvprintw(45, 0, "Mensagem Recebida: MENSAGEM TESTE");
+    mvprintw(y+=binary_height+2, 0, "Mensagem Recebida:");
+    mvprintw(y, 18, contexto->mensagem_recebida.c_str());
 
     refresh();
     //getchar();
-    if (x>100) x=0;
+    if (x>len) x=0;
     usleep(70000);
 }
