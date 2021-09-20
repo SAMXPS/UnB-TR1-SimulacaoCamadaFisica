@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <limits>
 #include <math.h>
+#include <string.h>
 
 std::string voltageToString(double voltage) {
     std::stringstream ss;
@@ -137,4 +138,27 @@ void draw_signal(int x_slide, int y_start, int height, int len, double* voltages
             '*'                     // Desenhar asteríscos no gráfico.
         );
     }
+}
+
+void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color) {
+	int length, x, y;                       // Variáveis auxiliares
+	float temp;
+
+	if(win == NULL)
+		win = stdscr;                       // Janela padrão nCurses.
+	getyx(win, y, x);                       // Tanho da tela.
+	if(startx != 0)
+		x = startx;                         // Inicialização da posição x.
+	if(starty != 0)
+		y = starty;                         // Inicialização da posição y.
+	if(width == 0)
+		width = 80;                         // Largura padrão.
+
+	length = strlen(string);                // Tamanho da string.
+	temp = (width - length)/ 2;             // Achando o centro.
+	x = startx + (int)temp;                 // Somando startx.
+	wattron(win, color);                    // Ligando coloração.
+	mvwprintw(win, y, x, "%s", string);     // Escrevendo na tela a mensagem.
+	wattroff(win, color);                   // Desligando coloração.
+	refresh();                              // Atualizando tela.
 }

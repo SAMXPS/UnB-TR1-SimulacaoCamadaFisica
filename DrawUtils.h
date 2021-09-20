@@ -42,4 +42,15 @@ void draw_binary(int x_slide, int y_start, int height, int len, int* voltages);
  */
 void draw_signal(int x_slide, int y_start, int height, int len, double* voltages, double max_voltage, double min_voltage);
 
+/**
+  * Rotina que escreve mensagem no centro da tela.
+  * WIN representa a janela do nCurses.
+  * starty posição y inicial.
+  * startx posição x inicial.
+  * width largura da tela.
+  * string mensagem a ser impressa.
+  * color esquema de cores.
+  */
+void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
+
 #endif
