@@ -2,3 +2,4 @@ simulacao
 .vscode/*
 *.o
 obj/*
+curses_test
