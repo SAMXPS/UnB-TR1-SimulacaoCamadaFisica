@@ -14,17 +14,7 @@ SIMULACAO - CAMADA FÍSICA======
 
 	------------------------
 	
-2. Trocar a codificação:
-
-	Para trocar o tipo de codificação/modulação:
-	  Alterar a variável "tipoDeCodificacao",
-	no arquivo "CamadaFisica.cpp".
-
-	int tipoDeCodificacao = CODIFICACAO_BIPOLAR;
-	int tipoDeCodificacao = CODIFICACAO_MANCHESTER;
-	int tipoDeCodificacao = CODIFICACAO_BINARIA;
-	
-3. Observação:
+Observação:
 
 	Ao executar o código, deixe o terminal em tela cheia,
 	para que você veja a interface gráfica completamente.
