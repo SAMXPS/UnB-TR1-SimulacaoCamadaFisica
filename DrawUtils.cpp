@@ -140,7 +140,7 @@ void draw_signal(int x_slide, int y_start, int height, int len, double* voltages
     }
 }
 
-void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color) {
+void print_in_middle(WINDOW *win, int starty, int startx, int width, const char *string, chtype color) {
 	int length, x, y;                       // Variáveis auxiliares
 	float temp;
 

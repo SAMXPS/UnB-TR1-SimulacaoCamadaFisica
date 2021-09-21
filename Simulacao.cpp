@@ -11,7 +11,7 @@
 #define  OPCAO_SAIR 3
 
 // Opcoes do menu principal.
-char *choices[] = {
+const char *choices[] = {
     "CODIFICACAO BINARIA",
     "CODIFICACAO MANCHESTER",
     "CODIFICACAO BIPOLAR",
@@ -19,7 +19,7 @@ char *choices[] = {
 };
 
 // Descricao das opcoes.
-char *descriptions[] = {
+const char *descriptions[] = {
     "Transmitir codificacao de bits em NRZ.",
     "Transmitir clock junto com os dados.",
     "Transmitir bits 1 com dois niveis +V e -V.",
@@ -27,21 +27,23 @@ char *descriptions[] = {
 };
 
 // Ajuda do menu principal.
-char *menu_inicial_help[] = {
+const char *menu_inicial_help[] = {
     "Utilize as setas para cima/para baixo para alterar opcao.",
     "Pressione ENTER para selecionar opcao desejada.",
     "Pressione F1 para sair do programa."
 };
 
-char *digite_uma_mensagem = "Por favor, digite uma mensagem para ser transmitida:";
+const char *digite_uma_mensagem = "Por favor, digite uma mensagem para ser transmitida:";
+const char *titulo_do_programa = "Simulacao Camada Fisica";
 
 // Ajuda da simulacao.
-char *simulacao_help[] = {
+const char *simulacao_help[] = {
     "Pressione ESPACO para pausar/resumir a simulacao.",
     "Pressione BACKSPACE para reiniciar a simulacao.",
     "Pressione F1 para sair do programa."
 };
 
+// Loop principal da simulação.
 int loop(contexto_simulacao* contexto, int x) {
     clear();                                                    // Limpando a tela.
     const int binary_height = 4;                                // Altura do sinal de bits.
@@ -101,6 +103,7 @@ int loop(contexto_simulacao* contexto, int x) {
     return x;
 }
 
+// Menu inicial
 int menu_selecionar_codifcacao() {
     WINDOW *my_menu_win;                                        // Janela nCurses.
 	MENU *my_menu;                                              // Menu nCurses.
@@ -138,7 +141,7 @@ int menu_selecionar_codifcacao() {
 
 	print_in_middle(
         my_menu_win, 1, 0, menu_width, 
-        "Simulacao Camada Fisica", COLOR_PAIR(1)                // Escrevendo título do menu.
+        titulo_do_programa, COLOR_PAIR(1)                // Escrevendo título do menu.
     );
 
 	mvwaddch(my_menu_win, 2, 0, ACS_LTEE);                      // T lateral esquerdo. Conecta linha horizontal e vertical.
@@ -187,6 +190,7 @@ int menu_selecionar_codifcacao() {
     return index;                                               // Retorna o índice da opção selecionada.
 }
 
+// Tela em que o usuário digita a mensagem a ser transmitida.
 std::string menu_digitar_mensagem() {
     int y = 0;
     char* str = (char*) calloc(80, sizeof(char));                   // Alocando memória.
